@@ -13,13 +13,13 @@ The dataset consists of a number of csv files. Some of the columns present are m
 #### Goals
 * To build an online movie recommendation system using the Collaborative Filtering algorithm from Spark MLlib.
 * Build a web-application that can make movie recommendations based on user input.
-* Visulize the recommended movies in a network interconnected graph.
+* Visualize the recommended movies in a network interconnected graph.
 
 #### Technology Stack
 Spark MLlib, Python, Flask, JavaScript
 
 ### Authors
-_[Siddharth Kumar](https://github.com/sidkuma24), Kushik Murli, Preethi Sundaravaradhan_
+_[Siddharth Kumar](https://github.com/sidkuma24), Kaushik Murli, Preethi Sundaravaradhan_
 
 ### References
 1. MovieLens, [https://grouplens.org/datasets/movielens/](https://grouplens.org/datasets/movielens/).
