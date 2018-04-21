@@ -19,7 +19,7 @@ The dataset consists of a number of csv files. Some of the columns present are m
 Spark MLlib, Python, Flask, JavaScript
 
 ### Authors
-_[Siddharth Kumar](https://github.com/sidkuma24), Kaushik Murli, Preethi Sundaravaradhan_
+_[Siddharth Kumar](https://sidkuma24.github.com), Kaushik Murli, Preethi Sundaravaradhan_
 
 ### References
 1. MovieLens, [https://grouplens.org/datasets/movielens/](https://grouplens.org/datasets/movielens/).
