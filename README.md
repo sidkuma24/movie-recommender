@@ -7,6 +7,11 @@
 ```
 $ sh download_datasets.sh
 ```
++ Put the datasets on the Hadoop fs
+```
+$ hadoop fs -put /user/<user_name>/datasets
+```
+
 + Run the application:
 ```
 $ sh run.sh
