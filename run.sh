@@ -1,0 +1,1 @@
+/opt/mapr/spark/spark-2.1.0/bin/spark-submit --master local[*] app.py
