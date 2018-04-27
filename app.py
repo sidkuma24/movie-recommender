@@ -22,8 +22,8 @@ def buildApp(sparkContext, dataset):
 
 @main.route("/<int:userID>/ratings/top/<int:count>", methods=["GET"])
 def topRatings(userID, count):
-    print("User %s requested top %s ratings",userID, count)
-    topRatings = RS.getTopRatings(userID, count)
+    print("User {} requested top {} ratings".format(userID, count))
+    topRatings = RS.getTopMovieRatings(userID, count)
     return json.dumps(topRatings)
   
 @main.route("/<int:userID>/ratings/<int:movieID>", methods=["GET"])  

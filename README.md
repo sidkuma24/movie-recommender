@@ -20,13 +20,13 @@ $ sh run.sh
 + Query the application
 ```
 # get ratings for a user
-curl http://0.0.0.0:5432/<user_id>/ratings/top
+curl http://0.0.0.0:5432/<user_id>/ratings/top/<count>
 
 # add ratings for a new user for predictions
 curl -X POST http://0.0.0.0:5432/<new_user_id>/ratings --data <movie_id,ratings> 
 
 # get the recommendations for new user
-curl http://0.0.0.0:5432/<new_user_id>/ratings/top
+curl http://0.0.0.0:5432/<new_user_id>/ratings/top/<count>
 
 ```
 
