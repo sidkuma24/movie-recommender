@@ -10,9 +10,9 @@ from pyspark.mllib.recommendation import ALS
 import os, time, sys
 
 def countAndAvgRatings(movieID_ratingsTuple):
-    ratingCount = len(movieID_ratingsTuple[1])
-    avgRating   = float(sum(x for x in movieID_ratingsTuple[1]))/ratingCount
-    return (movieID_ratingsTuple[0], (ratingCount, avgRating))
+    nratings = len(movieID_ratingsTuple[1])
+    return movieID_ratingsTuple[0], (nratings, float(sum(x for x in movieID_ratingsTuple[1]))/nratings )
+
 
 class Recommender:
 
@@ -36,6 +36,7 @@ class Recommender:
         self.moviesRDD = _moviesRDD.filter(lambda line: line!=_moviesRDDHeader)\
             .map(lambda line: line.split(",")).map(lambda tokens: (int(tokens[0]),tokens[1],tokens[2])).cache()    
         self.movieTitlesRDD = self.moviesRDD.map(lambda x : (int(x[0]),x[1])).cache()
+        self._countAvergeRatings()
         self.rank = 8
         self.seed = 5L
         self.iterations = 10
@@ -57,10 +58,12 @@ class Recommender:
                                                         
     def _predictRatings(self, user_movieRDD):
         # returns RDD in the format (title, rating, count)                                                          
-        predictionRDD = self.model.predictALL(user_movieRDD)
+        predictionRDD = self.model.predictAll(user_movieRDD)
         predictedRatingRDD = predictionRDD.map(lambda x: (x.product, x.rating))
-        predictedTitle_rating_countRDD = predictedRatingRDD.join(self.movieTitlesRDD).join(self.movies_ratings_countsRDD)
-        predictedTitle_rating_countRDD.map(lambda x: (r[1][0][1], r[1][0][0], r[1][1]))
+        predictedTitle_rating_countRDD = \
+            predictedRatingRDD.join(self.movieTitlesRDD).join(self.movies_ratings_countsRDD)
+        predictedTitle_rating_countRDD = \
+            predictedTitle_rating_countRDD.map(lambda r: (r[1][0][1], r[1][0][0], r[1][1]))
         return predictedTitle_rating_countRDD
             
     # for a given userID and a list of movieIDs we predict the 
@@ -88,8 +91,8 @@ class Recommender:
     # count is the length of this list
     def getTopMovieRatings(self, userID, count):
             
-        user_unratedMoviesRDD = self.ratingsRDD.filer(lambda rating: not rating[0] == userID)\
+        user_unratedMoviesRDD = self.ratingsRDD.filter(lambda rating: not rating[0] == userID)\
                                 .map(lambda x: (userID, x[1])).distinct()
-        predictedRatings = self._predictRatings(user_unratedMoviesRDD).filter(lambda x: x[2] >= 25).takeOrdered(count, key=lambda x: -x[1])
+        predictedRatings = self._predictRatings(user_unratedMoviesRDD).filter(lambda x: x[2]>= 25).takeOrdered(count, key=lambda x: -x[1])
         return predictedRatings
                                 
